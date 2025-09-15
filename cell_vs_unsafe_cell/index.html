@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <script>
+    async function test() {
+      const response = await fetch('target/wasm32-unknown-unknown/release/cell_vs_unsafe_cell.wasm');
+      const bytes = await response.arrayBuffer();
+
+      let times = 1000;
+      let total = 0;
+
+      for (let i = 0; i < times; i++) {
+        const { instance } = await WebAssembly.instantiate(bytes);
+        const t1 = performance.now();
+        for (let i = 0; i < 100_000; i++) {
+          instance.exports.inc(i);
+        }
+        const t2 = performance.now();
+        total += t2 - t1;
+      }
+      console.log("avg", total / times, "ms");
+    }
+
+    test();
+  </script>
+</body>
+</html>

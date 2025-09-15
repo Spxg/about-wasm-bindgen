@@ -1,0 +1,22 @@
+[package]
+name = "cell_vs_unsafe_cell"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+once_cell = "1.21.3"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[features]
+unsafe_cell = []
+
+[profile.release]
+# opt-level = 0
+# opt-level = 1
+# opt-level = 2
+# opt-level = 3
+# opt-level = "s"
+opt-level = "z"
+

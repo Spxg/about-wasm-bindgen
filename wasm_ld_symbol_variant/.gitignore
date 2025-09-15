@@ -1,0 +1,5 @@
+/rust/target
+/c/foo.o
+/c/bar.o
+/c/bar_without_control.o
+/c/out.wasm
