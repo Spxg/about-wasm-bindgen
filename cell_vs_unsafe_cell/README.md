@@ -28,12 +28,12 @@ Here are the results of my test:
 
 ||Cell|UnsafeCell|
 |-|-|-|
-|opt-level=0|18.145ms|12.758ms|
-|opt-level=1|2.867ms|2.623ms|
-|opt-level=2|2.503ms|2.398ms|
-|opt-level=3|2.508ms|2.402ms|
-|opt-level="s"|3.429ms|2.639ms|
-|opt-level="z"|4.161ms|3.075ms|
+|opt-level=0|14.782ms|9.006ms|
+|opt-level=1|2.729ms|1.993ms|
+|opt-level=2|2.084ms|1.832ms|
+|opt-level=3|2.065ms|1.802ms|
+|opt-level="s"|3.118ms|1.985ms|
+|opt-level="z"|3.642ms|2.122ms|
 
 As you can see, using `UnsafeCell` is always the fastest.
 

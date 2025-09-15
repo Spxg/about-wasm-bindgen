@@ -55,11 +55,10 @@ pub extern "C" fn inc(value: i32) -> usize {
     HEAP_SLAB
         .try_with(|x| {
             let mut prev = x.take();
-            let size = prev.len();
-            prev.try_reserve(128.min(size * 2)).unwrap();
             prev.push(value);
+            let ret = prev.len();
             x.replace(prev);
-            size + 1
+            ret
         })
         .unwrap()
 }
@@ -70,10 +69,8 @@ pub extern "C" fn inc(value: i32) -> usize {
     HEAP_SLAB
         .try_with(|x| {
             let v = unsafe { &mut *x.get() };
-            let size = v.len();
-            v.try_reserve(128.min(size * 2)).unwrap();
             v.push(value);
-            size + 1
+            v.len()
         })
         .unwrap()
 }
