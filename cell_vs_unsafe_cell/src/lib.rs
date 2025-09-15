@@ -44,33 +44,30 @@ impl<T> Deref for LazyCell<T> {
 }
 
 #[cfg(feature = "unsafe_cell")]
-static HEAP_SLAB: LazyCell<UnsafeCell<Vec<i32>>> = LazyCell::new(Default::default);
+static HEAP_SLAB: LazyCell<UnsafeCell<Vec<i32>>> = LazyCell::new(|| UnsafeCell::new(vec![0]));
 
 #[cfg(not(feature = "unsafe_cell"))]
-static HEAP_SLAB: LazyCell<Cell<Vec<i32>>> = LazyCell::new(Default::default);
+static HEAP_SLAB: LazyCell<Cell<Vec<i32>>> = LazyCell::new(|| Cell::new(vec![0]));
 
 #[cfg(not(feature = "unsafe_cell"))]
 #[unsafe(no_mangle)]
-pub extern "C" fn inc(value: i32) -> usize {
+pub extern "C" fn set(value: i32) {
     HEAP_SLAB
         .try_with(|x| {
             let mut prev = x.take();
-            prev.push(value);
-            let ret = prev.len();
+            prev[0] = value;
             x.replace(prev);
-            ret
         })
         .unwrap()
 }
 
 #[cfg(feature = "unsafe_cell")]
 #[unsafe(no_mangle)]
-pub extern "C" fn inc(value: i32) -> usize {
+pub extern "C" fn set(value: i32) {
     HEAP_SLAB
         .try_with(|x| {
             let v = unsafe { &mut *x.get() };
-            v.push(value);
-            v.len()
+            v[0] = value;
         })
         .unwrap()
 }
