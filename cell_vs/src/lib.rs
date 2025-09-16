@@ -4,8 +4,11 @@ use std::ops::Deref;
 #[cfg(feature = "unsafe_cell")]
 use std::cell::UnsafeCell;
 
-#[cfg(not(feature = "unsafe_cell"))]
+#[cfg(feature = "cell")]
 use std::cell::Cell;
+
+#[cfg(feature = "ref_cell")]
+use std::cell::RefCell;
 
 /// Wrapper around [`Lazy`] adding `Send + Sync` when `atomics` is not enabled.
 pub struct LazyCell<T, F = fn() -> T>(Wrapper<Lazy<T, F>>);
@@ -46,10 +49,24 @@ impl<T> Deref for LazyCell<T> {
 #[cfg(feature = "unsafe_cell")]
 static HEAP_SLAB: LazyCell<UnsafeCell<Vec<i32>>> = LazyCell::new(|| UnsafeCell::new(vec![0]));
 
-#[cfg(not(feature = "unsafe_cell"))]
+#[cfg(feature = "cell")]
 static HEAP_SLAB: LazyCell<Cell<Vec<i32>>> = LazyCell::new(|| Cell::new(vec![0]));
 
-#[cfg(not(feature = "unsafe_cell"))]
+#[cfg(feature = "ref_cell")]
+static HEAP_SLAB: LazyCell<RefCell<Vec<i32>>> = LazyCell::new(|| RefCell::new(vec![0]));
+
+
+#[cfg(feature = "ref_cell")]
+#[unsafe(no_mangle)]
+pub extern "C" fn set(value: i32) {
+    HEAP_SLAB
+        .try_with(|x| {
+            x.borrow_mut()[0] = value;
+        })
+        .unwrap()
+}
+
+#[cfg(feature = "cell")]
 #[unsafe(no_mangle)]
 pub extern "C" fn set(value: i32) {
     HEAP_SLAB

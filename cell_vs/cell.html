@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <body>
+  <div id="results" /div>
+
   <script src="
 https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js
 "></script>
@@ -12,25 +14,32 @@ https://cdn.jsdelivr.net/npm/benchmark@2.1.4/benchmark.min.js
 "></script>
 
   <script>
-    async function test() {
-      const response = await fetch('target/wasm32-unknown-unknown/release/cell_vs_unsafe_cell.wasm');
+    async function test(path) {
+      const response = await fetch(`target/${path}/wasm32-unknown-unknown/release/cell_vs.wasm`);
       const bytes = await response.arrayBuffer();
 
       const suite = new Benchmark.Suite;
       const { instance } = await WebAssembly.instantiate(bytes);
 
-      suite.add("set", () => {
+      suite.add(`${path}`, () => {
         instance.exports.set(0);
       });
 
       suite.on('cycle', function(event) {
-        console.log(event);
+        const result = event.target;
+        const resultElement = document.createElement('div');
+        resultElement.className = 'test-case';
+        resultElement.innerHTML = `
+          <strong>${result.name}:</strong>
+          <div class="ops">${Math.round(result.hz).toLocaleString()}/s</div>
+        `;
+        document.getElementById('results').appendChild(resultElement);
       });
 
       suite.run();
     }
 
-    test();
+    test("cell");
   </script>
 </body>
 </html>

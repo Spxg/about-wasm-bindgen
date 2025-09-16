@@ -26,9 +26,9 @@ cargo build --target wasm32-unknown-unknown --release --features unsafe_cell
 
 Here are the results of my test (todo: need retest!):
 
-||Cell|UnsafeCell|
-|-|-|-|
-|opt-level=0|14.782ms|9.006ms|
+||Cell|RefCell|UnsafeCell|
+|-|-|-|-|
+|opt-level=0|38,538,874/s|39,428,751/s|53,776,682/s|
 |opt-level=1|2.729ms|1.993ms|
 |opt-level=2|2.084ms|1.832ms|
 |opt-level=3|2.065ms|1.802ms|

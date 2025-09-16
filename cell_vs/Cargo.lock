@@ -3,7 +3,7 @@
 version = 4
 
 [[package]]
-name = "cell_vs_unsafe_cell"
+name = "cell_vs"
 version = "0.1.0"
 dependencies = [
  "once_cell",

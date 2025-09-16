@@ -1,5 +1,5 @@
 [package]
-name = "cell_vs_unsafe_cell"
+name = "cell_vs"
 version = "0.1.0"
 edition = "2024"
 
@@ -10,13 +10,14 @@ once_cell = "1.21.3"
 crate-type = ["cdylib", "rlib"]
 
 [features]
+cell = []
 unsafe_cell = []
+ref_cell = []
 
 [profile.release]
 # opt-level = 0
 # opt-level = 1
 # opt-level = 2
 # opt-level = 3
-# opt-level = "s"
-opt-level = "z"
-
+opt-level = "s"
+# opt-level = "z"
