@@ -1,5 +1,7 @@
 ## Cell Vs
 
+discuss: https://github.com/wasm-bindgen/wasm-bindgen/pull/4642#discussion_r2349469794
+
 The `externref_alloc` function in wasm-bindgen uses `Cell` internally.
 Since `externref_alloc` must be thread local, it is OK to use `UnsafeCell` here.
 
