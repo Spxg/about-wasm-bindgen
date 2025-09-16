@@ -33,14 +33,14 @@ Here are the results of my test:
 
 wasm-bindgen's externref bench (see `externref_bench`):
 
-||Cell|UnsafeCell|improve|
-|-|-|-|-|
-|opt-level=0|4,542,025 ops/sec ±0.37%|6,452,675 ops/sec ±0.41%|42%|
-|opt-level=1|17,899,143 ops/sec ±0.44%|20,226,752 ops/sec ±0.17%|13%|
-|opt-level=2|18,842,926 ops/sec ±0.28%|22,055,264 ops/sec ±0.38%|17%|
-|opt-level=3|19,284,668 ops/sec ±0.44%|21,858,031 ops/sec ±0.51%|13%|
-|opt-level="s"|15,597,994 ops/sec ±0.44%|20,452,012 ops/sec ±0.43%|31%|
-|opt-level="z"|14,377,145 ops/sec ±0.24%|18,637,259 ops/sec ±0.18%|30%|
+||Cell|RefCell|UnsafeCell|Improvement from Cell to UnsafeCell|
+|-|-|-|-|-|
+|opt-level=0|4,542,025 ops/sec ±0.37%|5,095,234 ops/sec ±0.30%|6,452,675 ops/sec ±0.41%|42%|
+|opt-level=1|17,899,143 ops/sec ±0.44%|19,749,848 ops/sec ±0.37%|20,226,752 ops/sec ±0.17%|13%|
+|opt-level=2|18,842,926 ops/sec ±0.28%|21,451,768 ops/sec ±0.40%|22,055,264 ops/sec ±0.38%|17%|
+|opt-level=3|19,284,668 ops/sec ±0.44%|21,819,526 ops/sec ±0.37%|21,858,031 ops/sec ±0.51%|13%|
+|opt-level="s"|15,597,994 ops/sec ±0.44%|19,656,787 ops/sec ±0.31%|20,452,012 ops/sec ±0.43%|31%|
+|opt-level="z"|14,377,145 ops/sec ±0.24%|17,786,003 ops/sec ±0.26%|18,637,259 ops/sec ±0.18%|30%|
 
 As you can see, using `UnsafeCell` is always the fastest.
 
