@@ -13,11 +13,3 @@ crate-type = ["cdylib", "rlib"]
 cell = []
 unsafe_cell = []
 ref_cell = []
-
-[profile.release]
-# opt-level = 0
-# opt-level = 1
-# opt-level = 2
-# opt-level = 3
-opt-level = "s"
-# opt-level = "z"
